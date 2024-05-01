@@ -172,10 +172,11 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
   }
 
 
-  @Override public void onFinishTrim(String in) {
+  @Override public void onFinishTrim(String in, boolean openTrimmedVideo) {
     runOnUiThread(() -> {
       WritableMap map = Arguments.createMap();
       map.putString("outputPath", in);
+      map.putBoolean("openTrimmedVideo", openTrimmedVideo);
       sendEvent(getReactApplicationContext(), "onFinishTrimming", map);
       showEditorPromise.resolve(in);
     });
