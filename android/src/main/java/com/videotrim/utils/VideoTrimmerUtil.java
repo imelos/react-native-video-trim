@@ -30,7 +30,7 @@ public class VideoTrimmerUtil {
   public static final int THUMB_HEIGHT = UnitConverter.dpToPx(50); // x2 for better resolution
   private static final int THUMB_RESOLUTION_RES = 2; // double thumb resolution for better quality
 
-  public static void trim(String inputFile, String outputFile, int videoDuration, long startMs, long endMs, final VideoTrimListener callback) {
+  public static void trim(String inputFile, String outputFile, int videoDuration, long startMs, long endMs, final VideoTrimListener callback, boolean openTrimmedVideo) {
     String cmd = "-ss " + startMs + "ms" + " -to " + endMs + "ms -i " + inputFile + " -c copy " + outputFile;
     callback.onStartTrim();
     FFmpegKit.executeAsync(cmd, session -> {
@@ -39,7 +39,7 @@ public class VideoTrimmerUtil {
 
       if (ReturnCode.isSuccess(returnCode)) {
         // SUCCESS
-        callback.onFinishTrim(outputFile);
+        callback.onFinishTrim(outputFile, openTrimmedVideo);
       }
       else {
         // CANCEL + FAILURE
