@@ -211,6 +211,10 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
     alertDialog.show();
   }
 
+  @Override public void onShare() {
+    sendEvent(getReactApplicationContext(), "onSharePress", null);
+  }
+
   @Override public void onSave() {
     if (!enableSaveDialog) {
       trimmerView.onSaveClicked();

@@ -6,7 +6,6 @@
   android:layout_height="match_parent"
   android:orientation="vertical"
   >
-
   <RelativeLayout
     android:id="@+id/layout_surface_view"
     android:layout_width="match_parent"
@@ -21,7 +20,27 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_centerInParent="true" />
-
+      
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        android:layout_gravity="bottom"
+        >
+        <TextView
+          android:id="@+id/shareBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="right"
+          android:gravity="center"
+          android:padding="10dp"
+          android:text="@string/share"
+          android:textColor="@android:color/white"
+          android:textSize="16dp" />
+    </FrameLayout>
   </RelativeLayout>
 
   <RelativeLayout
@@ -107,6 +126,7 @@
       android:layout_below="@+id/video_frames_layout"
       android:layout_marginLeft="10dp"
       android:layout_marginRight="10dp"
+      android:id="@+id/btnsLayout"
       android:orientation="horizontal"
       android:visibility="visible"
       >

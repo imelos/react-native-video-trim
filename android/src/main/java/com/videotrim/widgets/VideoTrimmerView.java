@@ -81,6 +81,10 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
   private long mMaxDuration = VideoTrimmerUtil.MAX_SHOOT_DURATION;
   private long mMinDuration = VideoTrimmerUtil.MIN_SHOOT_DURATION;
 
+  private TextView tv;
+  private TextView shareBtn;
+  private boolean openTrimmedVideo = false;
+
 
   public VideoTrimmerView(ReactApplicationContext context, AttributeSet attrs) {
     this(context, attrs, 0, null);
@@ -111,7 +115,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     mVideoThumbAdapter = new VideoTrimmerAdapter(mContext);
     mVideoThumbRecyclerView.setAdapter(mVideoThumbAdapter);
     mVideoThumbRecyclerView.addOnScrollListener(mOnScrollListener);
-
+    tv = findViewById(R.id.saveBtn);  
+    shareBtn = findViewById(R.id.shareBtn);
     configure(config);
     setUpListeners();
   }
@@ -174,8 +179,9 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     int screenHeight = mLinearVideo.getHeight();
 
     if (videoHeight > videoWidth) {
-      lp.width = screenWidth;
       lp.height = screenHeight;
+      float r = videoWidth / (float) videoHeight;
+      lp.width = (int) (lp.height * r);
     } else {
       lp.width = screenWidth;
       float r = videoHeight / (float) videoWidth;
@@ -246,6 +252,10 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
       mOnTrimVideoListener.onSave();
     });
 
+    shareBtn.setOnClickListener(view -> {
+      mOnTrimVideoListener.onShare();
+    });
+
     mVideoView.setOnPreparedListener(mp -> {
       // this is called everytime activity goes active, and can fire multiple times
       // so that we create a flag to not run below code more than once
@@ -275,7 +285,8 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
         mDuration,
         mLeftProgressPos,
         mRightProgressPos,
-        mOnTrimVideoListener);
+        mOnTrimVideoListener,
+        openTrimmedVideo);
     }
   }
 
@@ -317,6 +328,13 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
           break;
       }
 
+      if (mRightProgressPos - mLeftProgressPos < mDuration) {
+        tv.setText("Done");
+        openTrimmedVideo = true;
+      } else {
+        tv.setText("Save");
+        openTrimmedVideo = false;
+      }
 
       mRangeSeekBarView.setStartEndTime(mLeftProgressPos, mRightProgressPos);
     }
