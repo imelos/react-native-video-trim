@@ -276,11 +276,12 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
 
 
   @Override
-  public void onFinishTrim(String in, long startTime, long endTime, int duration) {
+  public void onFinishTrim(String in, long startTime, long endTime, int duration,  boolean openTrimmedVideo) {
     outputFile = in;
     runOnUiThread(() -> {
       WritableMap map = Arguments.createMap();
       map.putString("outputPath", in);
+      map.putBoolean("openTrimmedVideo", openTrimmedVideo);
       map.putInt("duration", duration);
       map.putDouble("startTime", (double) startTime);
       map.putDouble("endTime", (double) endTime);
@@ -348,6 +349,10 @@ public class VideoTrimModule extends ReactContextBaseJavaModule implements Video
     });
     AlertDialog alertDialog = builder.create();
     alertDialog.show();
+  }
+
+  @Override public void onShare() {
+    sendEvent(getReactApplicationContext(), "onSharePress", null);
   }
 
   @Override

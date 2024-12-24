@@ -40,7 +40,7 @@ public class VideoTrimmerUtil {
   public static final int THUMB_WIDTH = UnitConverter.dpToPx(25); // x2 for better resolution
   private static final int THUMB_RESOLUTION_RES = 2; // double thumb resolution for better quality
 
-  public static FFmpegSession trim(String inputFile, String outputFile, int videoDuration, long startMs, long endMs, final VideoTrimListener callback) {
+  public static FFmpegSession trim(String inputFile, String outputFile, int videoDuration, long startMs, long endMs, final VideoTrimListener callback, boolean openTrimmedVideo) {
     // Get the current date and time
     Date currentDate = new Date();
 
@@ -73,7 +73,7 @@ public class VideoTrimmerUtil {
       ReturnCode returnCode = session.getReturnCode();
       if (ReturnCode.isSuccess(session.getReturnCode())) {
         // SUCCESS
-        callback.onFinishTrim(outputFile, startMs, endMs, videoDuration);
+        callback.onFinishTrim(outputFile, startMs, endMs, videoDuration, openTrimmedVideo);
       } else if (ReturnCode.isCancel(session.getReturnCode())) {
         // CANCEL
         callback.onCancelTrim();
