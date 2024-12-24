@@ -634,15 +634,7 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
     } else if (newX >= rightBoundary) {
       didClamp = true;
     }
-
-    if (rightBoundary - leftBoundary < mDuration) {
-        tv.setText("Done");
-        openTrimmedVideo = true;
-      } else {
-        tv.setText("Save");
-        openTrimmedVideo = false;
-      }
-
+    
     if (didClamp && !didClampWhilePanning) {
       playHapticFeedback(false);
     }
@@ -755,6 +747,14 @@ public class VideoTrimmerView extends FrameLayout implements IVideoTrimmerView {
           break;
         default:
           return false;
+      }
+      long selectedDuration = endTime - startTime;
+      if (selectedDuration < mDuration) {
+        tv.setText("Done");
+        openTrimmedVideo = true;
+      } else {
+        tv.setText("Save");
+        openTrimmedVideo = false;
       }
       return true;
     });
