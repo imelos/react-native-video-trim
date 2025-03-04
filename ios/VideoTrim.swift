@@ -121,9 +121,8 @@ class VideoTrim: RCTEventEmitter, AssetLoaderDelegate, UIDocumentPickerDelegate 
         }
         
         let destPath = URL(string: uri)
-        let newPath = renameFile(at: destPath!, newName: "beforeTrim")
       
-        guard let destPath = newPath else { return }
+        guard let destPath = destPath else { return }
         
         DispatchQueue.main.async {
             self.vc = VideoTrimmerViewController()
