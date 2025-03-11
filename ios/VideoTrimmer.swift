@@ -39,6 +39,22 @@ import AVFoundation
         view.accessibilityIdentifier = "thumbView"
         return view
     }()
+
+    public var leadingGrabberHidden: Bool {
+        get { thumbView.leadingGrabber.isHidden }
+        set { 
+            thumbView.leadingGrabber.isHidden = newValue 
+            thumbView.leadingViewHidden = newValue;
+        }
+    }
+    
+    public var trailingGrabberHidden: Bool {
+        get { thumbView.trailingGrabber.isHidden }
+        set { 
+            thumbView.trailingGrabber.isHidden = newValue 
+            thumbView.trailingViewHidden = newValue;
+        }
+    }
     
     private let wrapperView: UIView = {
         let view = UIView()

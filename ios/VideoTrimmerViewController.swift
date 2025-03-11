@@ -344,6 +344,8 @@ class VideoTrimmerViewController: UIViewController {
         trimmer.asset = asset
         trimmer.minimumDuration = CMTime(seconds: 1, preferredTimescale: 600)
         trimmer.enableHapticFeedback = enableHapticFeedback
+        trimmer.leadingGrabberHidden = true
+        trimmer.trailingGrabberHidden = true
         
         if let maxDuration = maximumDuration {
             trimmer.maximumDuration = CMTime(seconds: max(1, Double(maxDuration)), preferredTimescale: 600)
